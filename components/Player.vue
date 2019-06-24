@@ -1,13 +1,15 @@
 <template>
+
     <div class="container">
         <div>
+
             <!-- Toggle playback button -->
             <button id="toggle-play" type="button" class="btn btn-primary">Play</button>
             <!-- Current position -->
             <span id="position">00:00</span>
 
             <progress id='progress-bar' class="progress is-primary" value="0"
-                max="100">0%</progress>
+                max="1"></progress>
 
             <div class="d-inline-flex align-items-center">
                 <!-- Toggle mute button -->
@@ -36,12 +38,18 @@
 </template>
 
 <script>
+//const test = async () => {
+//   await Promise.resolve();
+//};
+
 export default {
+    data() {
+        return {};
+    },
     mounted() {
         // Wait for the DOM to load and initialise the player
         window.addEventListener("DOMContentLoaded", function main() {
             const player = new iono.Player();
-
             player.ready(function() {
                 // find player ui elements on the DOM
                 const $togglePlay = document.getElementById("toggle-play");
@@ -63,6 +71,8 @@ export default {
                 );
                 const $progressBar = document.getElementById("progress-bar");
 
+                let $duration = null;
+
                 // toggle playback when the toggle button is clicked
                 $togglePlay.addEventListener("click", function() {
                     player.togglePlay();
@@ -78,9 +88,16 @@ export default {
                     player.setVolume(event.target.valueAsNumber);
                 });
 
+                //duration changes (changed track?)
+                //$volume.addEventListener("durationchange", function(event) {
+                //  $duration = player.getDuration();
+                //    console.log(event);
+                //});
+
                 // update the toggle button text depending on the paused state
                 player.on("play", function() {
                     $togglePlay.textContent = "Pause";
+                    $duration = player.getDuration();
                 });
                 player.on("pause", function() {
                     $togglePlay.textContent = "Play";
@@ -118,12 +135,17 @@ export default {
                         .format("hh:mm:ss", {
                             trim: false
                         });
+                    $progressBar.value = event.position / $duration;
+                });
 
-                    $progressBar.value = event.position;
+                $progressBar.addEventListener("click", function(evt) {
+                    var percent = evt.offsetX / this.offsetWidth;
+                    player.setPosition(percent * $duration);
+                    this.value = percent / 100;
                 });
 
                 $showNowPlaying.addEventListener("click", function() {
-                    //  console.log(player.getNowPlayingItems());
+                    //console.log(player.getNowPlayingItems()); // <-- Not working!
                     console.log(player.getPlaylist());
                     console.log(player.getPlaylistItem());
                     console.log(player.getPlaylistIndex());
@@ -142,7 +164,7 @@ export default {
                         metadata: {
                             contentType: "podcast",
                             uid: "0001",
-                            duration: 123.5,
+                            duration: 241,
                             language: "en",
                             title: "Episode 1 short title",
                             description: "Longer episode description string",
@@ -224,187 +246,9 @@ export default {
                     });
                 });
 
-                player.load([
-                    {
-                        metadata: {
-                            contentType: "podcast",
-                            uid: "0002",
-                            duration: 123.5,
-                            language: "en",
-                            title: "Episode 1 short title",
-                            description: "Longer episode description string",
-                            creator: "Podcaster name",
-                            grouping: "Podcast show name",
-                            publishDate: `2019-03-24T09:12:09+00:00`,
-                            url: "https://example.com/episode-home-page/1",
-                            icons: [
-                                {
-                                    size: "small",
-                                    url:
-                                        "https://example.com/episode/1/300x300.jpg"
-                                },
-                                {
-                                    size: "medium",
-                                    url:
-                                        "https://example.com/episode/1/600x600.jpg"
-                                }
-                            ],
-                            banners: [
-                                {
-                                    size: "medium",
-                                    url:
-                                        "https://example.com/episode/1/600x200.jpg"
-                                }
-                            ]
-                        },
-                        audio: [
-                            {
-                                url:
-                                    "https://download-demo3.sharp-stream.com/13%20-%20Infinity%20(Klaas%20Vocal%20Remix).mp3",
-                                bitrate: 64000,
-                                quality: "low",
-                                filesize: 123000
-                                // mime: 'audio/mp3; codecs="mp4a.40.5"'
-                            },
-                            {
-                                url:
-                                    "https://download-demo3.sharp-stream.com/13%20-%20Infinity%20(Klaas%20Vocal%20Remix).mp3",
-                                bitrate: 128000,
-                                quality: "medium",
-                                filesize: 456000
-                                // mime: 'audio/mp3; codecs="mp4a.40.2"'
-                            }
-                        ],
-                        text: [
-                            {
-                                kind: "chapters",
-                                url: "https://example.com/chapters.en.vtt",
-                                language: "en"
-                            },
-                            {
-                                kind: "captions",
-                                url: "https://example.com/captions.en.vtt",
-                                language: "en"
-                            }
-                        ],
-                        links: [
-                            {
-                                link: "like",
-                                url: "https://example.com/like/1"
-                            }
-                        ],
-                        tags: [
-                            {
-                                service: "all",
-                                name: "media_id",
-                                value: "1"
-                            },
-                            {
-                                service: "google",
-                                name: "user_id",
-                                value: "123"
-                            }
-                        ],
-                        ads: [
-                            {
-                                position: 0.0,
-                                metadata: {
-                                    contentType: "ad-client"
-                                }
-                            }
-                        ]
-                    },
-
-                    {
-                        metadata: {
-                            contentType: "podcast",
-                            uid: "example:string:identifier:1",
-                            duration: 123.5,
-                            language: "en",
-                            title: "Episode 1 short title",
-                            description: "Longer episode description string",
-                            creator: "Podcaster name",
-                            grouping: "Podcast show name",
-                            publishDate: `2019-03-24T09:12:09+00:00`,
-                            url: "https://example.com/episode-home-page/1",
-                            icons: [
-                                {
-                                    size: "small",
-                                    url:
-                                        "https://example.com/episode/1/300x300.jpg"
-                                },
-                                {
-                                    size: "medium",
-                                    url:
-                                        "https://example.com/episode/1/600x600.jpg"
-                                }
-                            ],
-                            banners: [
-                                {
-                                    size: "medium",
-                                    url:
-                                        "https://example.com/episode/1/600x200.jpg"
-                                }
-                            ]
-                        },
-                        audio: [
-                            {
-                                url:
-                                    "https://download-demo3.sharp-stream.com/Boston%20-%20Pixel%20Station.mp3",
-                                bitrate: 64000,
-                                quality: "low",
-                                filesize: 123000
-                                // mime: 'audio/mp3; codecs="mp4a.40.5"'
-                            },
-                            {
-                                url:
-                                    "https://download-demo3.sharp-stream.com/Boston%20-%20Pixel%20Station.mp3",
-                                bitrate: 128000,
-                                quality: "medium",
-                                filesize: 456000
-                                // mime: 'audio/mp3; codecs="mp4a.40.2"'
-                            }
-                        ],
-                        text: [
-                            {
-                                kind: "chapters",
-                                url: "https://example.com/chapters.en.vtt",
-                                language: "en"
-                            },
-                            {
-                                kind: "captions",
-                                url: "https://example.com/captions.en.vtt",
-                                language: "en"
-                            }
-                        ],
-                        links: [
-                            {
-                                link: "like",
-                                url: "https://example.com/like/1"
-                            }
-                        ],
-                        tags: [
-                            {
-                                service: "all",
-                                name: "media_id",
-                                value: "1"
-                            },
-                            {
-                                service: "google",
-                                name: "user_id",
-                                value: "123"
-                            }
-                        ],
-                        ads: [
-                            {
-                                position: 0.0,
-                                metadata: {
-                                    contentType: "ad-client"
-                                }
-                            }
-                        ]
-                    }
-                ]);
+                axios.get("playlist.json").then(function(response) {
+                    player.load(response.data);
+                });
             });
         });
     }

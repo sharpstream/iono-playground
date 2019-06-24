@@ -5,6 +5,9 @@ import moment from "moment";
 import momentDurationFormatSetup from "moment-duration-format";
 window.moment = moment;
 
+import axios from 'axios';
+window.axios = axios;
+
 const root = new Vue({
     render: createElement => createElement(App)
 }).$mount('#app')
