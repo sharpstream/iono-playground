@@ -15,11 +15,9 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
-    "@vue/component-compiler-utils": "^3.0.0",
     "cssnano": "^4.1.10",
-    "parcel-plugin-static-files-copy": "^2.1.2",
-    "vue-hot-reload-api": "^2.3.3",
-    "vue-template-compiler": "^2.6.10"
+    "parcel-bundler": "^1.12.3",
+    "parcel-plugin-static-files-copy": "^2.1.2"
   },
   "staticFiles": {
     "staticPath": "public",

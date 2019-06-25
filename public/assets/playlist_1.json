@@ -45,7 +45,7 @@
         "text": [
             {
                 "kind": "chapters",
-                "url": "https://example.com/chapters.en.vtt",
+                "url": "sample.vtt",
                 "language": "en"
             }
         ],
@@ -122,7 +122,7 @@
         "text": [
             {
                 "kind": "chapters",
-                "url": "https://example.com/chapters.en.vtt",
+                "url": "sample.vtt",
                 "language": "en"
             }
         ],
