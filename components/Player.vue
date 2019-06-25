@@ -38,10 +38,6 @@
 </template>
 
 <script>
-//const test = async () => {
-//   await Promise.resolve();
-//};
-
 export default {
     data() {
         return {};
@@ -246,7 +242,7 @@ export default {
                     });
                 });
 
-                axios.get("playlist.json").then(function(response) {
+                axios.get("./assets/playlist.json").then(function(response) {
                     player.load(response.data);
                 });
             });
