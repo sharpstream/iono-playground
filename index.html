@@ -5,48 +5,51 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <script defer src="https://p2.iono.qa/bundle/player.js"></script>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://vuejs.org/js/vue.js"></script>
 </head>
 
 <body>
-    <div class="container">
-        <div>
-            <!-- Toggle playback button -->
-            <button id="toggle-play" type="button"
-                    class="btn btn-primary">Play</button>
-            <!-- Current position -->
-            <span id="position">00:00</span>
-            <progress id='progress-bar' class="progress is-primary" value="0"
-                      max="1"></progress>
-            <div class="d-inline-flex align-items-center">
-                <!-- Toggle mute button -->
-                <button id="toggle-mute" type="button"
-                        class="btn mr-2 btn-sm btn-secondary">Mute</button>
-                <!-- Volume control slider -->
-                <div style="max-width:7.5rem;">
-                    <label for="volume"
-                           class="mb-0 small text-muted">Volume</label>
-                    <input type="range" min="0.0" max="1.0" step="0.1"
-                           id="volume"
-                           value="1.0" class="custom-range">
+    <div v-cloak id='app' class="container">
+        <div class="column add-bottom">
+            <div id="mainwrap">
+                <button class='button is-rounded' @click='togglePlay()'>{{playButtonText}}</button>
+                <button class='button is-rounded' @click='toggleMute()'>{{muteButtonText}}</button>
+                <div style='float:right'>
+                    <span>Volume: {{volume}}</span>
+                    <circle-slider style='float:right' :min="0" :max='100' :side="50" v-model="volume"> </circle-slider>
                 </div>
-                <div>
+                <div id="nowPlay">
+                    <span id="npAction"></span>
+                    <span id="npTitle"></span>
+                </div>
+                <div id="audiowrap">
+                    <progress @click='progressBarClicked()' id='progress-bar'
+                              class="progress is-primary" value="0" max="1"></progress>
+                    <span>{{position}} / {{ duration | formatDuration }}</span>
+                    <div id="tracks">
+                        <a @click="previousPlaylistItem()" id="btnPrev">&larr;</a><a
+                           @click="nextPlaylistItem()" id="btnNext">&rarr;</a>
+                    </div>
+                </div>
+                <div id="plwrap">
+                    <ul id="plList">
+                        <li @click="playlistItemSelect(index)" :class="{ plSel: currentPlaylistIndex === index }"
+                            :key='index' v-for="(p, index) in playlist">
+                            <div class="plItem">
+                                <span class="plNum">{{index + 1}}</span>
+                                <span class="plTitle">{{ p.metadata.title }}</span>
+                                <span class="plLength">{{ p.metadata.duration | formatDuration}}</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <button class="button is-primary">Load Playlist 1</button>
-        <button class="button is-info">Load Playlist 2</button>
-        <button id="show-now-playing" type="button"
-                class="button is-light">Now Playing</button>
-        <button id="previous-playlist-item" type="button"
-                class="button is-light">Previous Playlist Item</button>
-        <button id="next-playlist-item" type="button"
-                class="button is-light">Next Playlist Item</button>
-        <button id="add-item-to-playlist" type="button"
-                class="button is-light">Add Item To Playlist</button>
-        <button id="get-chapters" type="button"
-                class="button is-light"> Get Chapters</button>
+        <button @click='logInfo()'>Console Log Info</button>
         <h6 class="text-muted">Tracking events:</h6>
-        <pre class="pre-scrollable"><code id="console"></code></pre>
+        <pre class="pre-scrollable"><code>{{events}}</code></pre>
     </div>
     <script src="./index.js"></script>
 </body>

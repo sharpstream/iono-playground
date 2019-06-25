@@ -5,26 +5,26 @@
             "uid": "uuid:00001",
             "duration": 292,
             "language": "en",
-            "title": "Episode 1 short title",
+            "title": "Episode 1",
             "description": "Longer episode description string",
             "creator": "Podcaster name",
             "grouping": "Podcast show name",
             "publishDate": "2019-03-24T09: 12: 09+00: 00",
-            "url": "https://example.com/episode-home-page/1",
+            "url": "https://sharp-stream.com",
             "icons": [
                 {
                     "size": "small",
-                    "url": "https://example.com/episode/1/300x300.jpg"
+                    "url": "https://bulma.io/images/placeholders/300x300.png"
                 },
                 {
                     "size": "medium",
-                    "url": "https://example.com/episode/1/600x600.jpg"
+                    "url": "https://bulma.io/images/placeholders/600x600.png"
                 }
             ],
             "banners": [
                 {
                     "size": "medium",
-                    "url": "https://example.com/episode/1/600x200.jpg"
+                    "url": "https://bulma.io/images/placeholders/600x200.png"
                 }
             ]
         },
@@ -82,7 +82,7 @@
             "uid": "uuid:00002",
             "duration": 241,
             "language": "en",
-            "title": "Episode 1 short title",
+            "title": "Episode 2",
             "description": "Longer episode description string",
             "creator": "Podcaster name",
             "grouping": "Podcast show name",
