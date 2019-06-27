@@ -16,7 +16,7 @@ new Vue({
     },
     data() {
         return {
-            volume: 100,
+            volume: 10,
             muteButtonText: 'Mute',
             playButtonText: 'Play',
             player: null,
@@ -37,10 +37,7 @@ new Vue({
     },
 
     beforeMount() {
-        // note: async/await doesn't work with parcel bundler for some reason!
-        axios.get("./assets/playlist_1.json").then((response) => {
-            this.playlist = response.data;
-        });
+        this.getPlaylist();
     },
 
     filters: {
@@ -61,8 +58,9 @@ new Vue({
             this.player = player;
             this.player.ready(() => {
                 this.progressBar = document.getElementById("progress-bar");
-                this.setupEvents();
-                this.player.load(this.playlist);
+                this.setupEvents();                      // setuo iono player even listeners
+                this.player.load(this.playlist);         // load playlist
+                this.player.setVolume(this.volume / 100) // set volume to the initial on start
             });
         }
         // Wait for the DOM to load and initialise the player
@@ -130,13 +128,16 @@ new Vue({
         },
 
         previousPlaylistItem() {
-            this.player.previousPlaylistItem();
-            this.player.setPosition(this.progressBar.offsetX / this.progressBar.offsetWidth * this.duration);
+            if (this.player.previousPlaylistItem()) {
+                this.player.setPosition(this.progressBar.offsetX / this.progressBar.offsetWidth * this.duration);
+            }
         },
 
         nextPlaylistItem() {
-            this.player.nextPlaylistItem();
-            this.player.setPosition(this.progressBar.offsetX / this.progressBar.offsetWidth * this.duration);
+            if (this.player.nextPlaylistItem()) {
+                //  this.player.nextPlaylistItem();
+                this.player.setPosition(this.progressBar.offsetX / this.progressBar.offsetWidth * this.duration);
+            }
         },
 
         progressBarClicked() {
@@ -153,6 +154,11 @@ new Vue({
             this.player.selectPlaylistItem(index);
             this.player.play();
         },
+
+        async getPlaylist() {
+            let response = await axios.get("./assets/playlist_1.json");
+            this.playlist = response.data;
+        }
 
     },
 })
