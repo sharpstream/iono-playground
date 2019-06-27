@@ -10,9 +10,12 @@
   "license": "UNLICENSED",
   "dependencies": {
     "axios": "^0.19.0",
+    "izitoast": "^1.4.0",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
-    "vue-circle-slider": "^1.0.2"
+    "node-webvtt": "^1.5.0",
+    "vue-circle-slider": "^1.0.2",
+    "vue-notifications": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",

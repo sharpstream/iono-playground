@@ -5,26 +5,26 @@
             "uid": "uuid:00001",
             "duration": 292,
             "language": "en",
-            "title": "Episode 1 short title",
-            "description": "Longer episode description string",
+            "title": "Episode 1",
+            "description": "This is description of Ep1",
             "creator": "Podcaster name",
             "grouping": "Podcast show name",
             "publishDate": "2019-03-24T09: 12: 09+00: 00",
-            "url": "https://example.com/episode-home-page/1",
+            "url": "https://sharp-stream.com",
             "icons": [
                 {
                     "size": "small",
-                    "url": "https://example.com/episode/1/300x300.jpg"
+                    "url": "https://placekitten.com/300/300"
                 },
                 {
                     "size": "medium",
-                    "url": "https://example.com/episode/1/600x600.jpg"
+                    "url": "https://placekitten.com/600/600"
                 }
             ],
             "banners": [
                 {
                     "size": "medium",
-                    "url": "https://example.com/episode/1/600x200.jpg"
+                    "url": "https://placekitten.com/600/200"
                 }
             ]
         },
@@ -33,19 +33,20 @@
                 "url": "https://download-demo3.sharp-stream.com/13%20-%20Infinity%20(Klaas%20Vocal%20Remix).mp3",
                 "bitrate": 64000,
                 "quality": "low",
-                "filesize": 123000
+                "filesize": 200000
             },
             {
                 "url": "https://download-demo3.sharp-stream.com/13%20-%20Infinity%20(Klaas%20Vocal%20Remix).mp3",
                 "bitrate": 128000,
-                "quality": "medium",
+                "quality": "high",
                 "filesize": 456000
             }
         ],
         "text": [
             {
                 "kind": "chapters",
-                "url": "sample.vtt",
+                "label": "test1",
+                "url": "http://localhost:1235/assets/1.vtt",
                 "language": "en"
             }
         ],
@@ -80,10 +81,10 @@
         "metadata": {
             "contentType": "podcast",
             "uid": "uuid:00002",
-            "duration": 241,
-            "language": "en",
-            "title": "Episode 1 short title",
-            "description": "Longer episode description string",
+            "duration": 237,
+            "language": "fr",
+            "title": "Episode 2",
+            "description": "This is description of Ep2",
             "creator": "Podcaster name",
             "grouping": "Podcast show name",
             "publishDate": "2019-03-24T09: 12: 09+00: 00",
@@ -91,17 +92,81 @@
             "icons": [
                 {
                     "size": "small",
-                    "url": "https://example.com/episode/1/300x300.jpg"
+                    "url": "https://placeimg.com/300/300/any"
                 },
                 {
                     "size": "medium",
-                    "url": "https://example.com/episode/1/600x600.jpg"
+                    "url": "https://placeimg.com/600/600/any"
                 }
             ],
             "banners": [
                 {
                     "size": "medium",
-                    "url": "https://example.com/episode/1/600x200.jpg"
+                    "url": "https://placeimg.com/600/200/any"
+                }
+            ]
+        },
+        "audio": [
+            {
+                "url": "https://download-demo3.sharp-stream.com/sam.mp3",
+                "bitrate": 64000,
+                "quality": "high",
+                "filesize": 456000
+            }
+        ],
+        "links": [
+            {
+                "link": "like",
+                "url": "https://example.com/like/1"
+            }
+        ],
+        "tags": [
+            {
+                "service": "all",
+                "name": "media_id",
+                "value": "1"
+            },
+            {
+                "service": "google",
+                "name": "user_id",
+                "value": "123"
+            }
+        ],
+        "ads": [
+            {
+                "position": 0.0,
+                "metadata": {
+                    "contentType": "ad-client"
+                }
+            }
+        ]
+    },
+    {
+        "metadata": {
+            "contentType": "podcast",
+            "uid": "uuid:00003",
+            "duration": 241,
+            "language": "en",
+            "title": "Episode 3",
+            "description": "This is description of Ep3",
+            "creator": "Podcaster name",
+            "grouping": "Podcast show name",
+            "publishDate": "2019-03-24T09: 12: 09+00: 00",
+            "url": "https://example.com/episode-home-page/1",
+            "icons": [
+                {
+                    "size": "small",
+                    "url": "https://placeimg.com/300/300/nature"
+                },
+                {
+                    "size": "medium",
+                    "url": "https://placeimg.com/600/600/nature"
+                }
+            ],
+            "banners": [
+                {
+                    "size": "medium",
+                    "url": "https://placeimg.com/600/200/nature"
                 }
             ]
         },
@@ -110,19 +175,20 @@
                 "url": "https://download-demo3.sharp-stream.com/Boston%20-%20Pixel%20Station.mp3",
                 "bitrate": 64000,
                 "quality": "low",
-                "filesize": 123000
+                "filesize": 200000
             },
             {
                 "url": "https://download-demo3.sharp-stream.com/Boston%20-%20Pixel%20Station.mp3",
                 "bitrate": 128000,
-                "quality": "medium",
+                "quality": "high",
                 "filesize": 456000
             }
         ],
         "text": [
             {
                 "kind": "chapters",
-                "url": "sample.vtt",
+                "label": "test2",
+                "url": "http://localhost:1235/assets/2.vtt",
                 "language": "en"
             }
         ],

@@ -1430,7 +1430,7 @@ command-exists@^1.2.6:
   resolved "https://registry.yarnpkg.com/command-exists/-/command-exists-1.2.8.tgz#715acefdd1223b9c9b37110a149c6392c2852291"
   integrity sha512-PM54PkseWbiiD/mMsbvW351/u+dafwTJ0ye2qB60G1aGQP9j3xK2gmMDc+R34L3nDtx4qMCitXT75mkbkGJDLw==
 
-commander@^2.11.0, commander@^2.19.0, commander@^2.9.0:
+commander@^2.11.0, commander@^2.19.0, commander@^2.20.0, commander@^2.9.0:
   version "2.20.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
   integrity sha512-7j2y+40w61zy6YC2iRNpUe/NwhNyoXrYpHMrSunaMG64nRnaf96zO/KMQR4OyN/UnE5KLyEBnKHd4aG3rskjpQ==
@@ -2894,6 +2894,11 @@ isstream@~0.1.2:
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
+izitoast@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/izitoast/-/izitoast-1.4.0.tgz#1aa4e3408b7159fba743506af66d8be54fd929fb"
+  integrity sha512-Oc1X2wiQtPp39i5VpIjf3GJf5sfCtHKXZ5szx7RareyEeFLUlcEW0FSfBni28+Ul6KNKZRKzhVuWzSP4Xngh0w==
+
 js-beautify@^1.8.9:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.10.0.tgz#9753a13c858d96828658cd18ae3ca0e5783ea672"
@@ -3192,6 +3197,11 @@ mimic-fn@^1.0.0:
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-1.2.0.tgz#820c86a39334640e99516928bd03fca88057d022"
   integrity sha512-jf84uxzwiuiIVKiOLpfYk7N46TSy8ubTonmneY9vrpHNAnp0QBt2BxWV9dO3/j+BoVAb+a5G6YDPW3M5HOdMWQ==
 
+mini-toastr@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/mini-toastr/-/mini-toastr-0.8.1.tgz#8b8632210a0266ece061f69920522e76996facfa"
+  integrity sha512-LCZGshd3D4OuIT/Ae8uPrfZw2gLbSxD8PeUQaie8yc70OMLRrQ13Dc+MmcI+95RYBnT9R+mZ3mXhmb9wD00HUA==
+
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
@@ -3371,6 +3381,13 @@ node-releases@^1.1.23:
   integrity sha512-uq1iL79YjfYC0WXoHbC/z28q/9pOl8kSHaXdWmAAc8No+bDwqkZbzIJz55g/MUsPgSGm9LZ7QSUbzTcH5tz47w==
   dependencies:
     semver "^5.3.0"
+
+node-webvtt@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/node-webvtt/-/node-webvtt-1.5.0.tgz#2beb039432bfa5cd39bbf974294c533c8f1c99df"
+  integrity sha512-KpvYb+M1uGJWJMknPwmgkwN0tEoz2yNLrxq0z1oZZE+o7ASyOL3yuis9YaMG3T7eQP13tMYiRg9mDFNoTNNw+Q==
+  dependencies:
+    commander "^2.20.0"
 
 nopt@^4.0.1, nopt@~4.0.1:
   version "4.0.1"
@@ -5210,6 +5227,11 @@ vue-circle-slider@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/vue-circle-slider/-/vue-circle-slider-1.0.2.tgz#1d63150d366db82b6c75a76a96e254d1da27b167"
   integrity sha512-OGvQnzYb8xFr0ph8dNLzD7Vbd1pNxJTVxS7OzsqoC5T2wAswLSa339JVP9J/V5MWya5tsqyExq/7N+uMl1IoRQ==
+
+vue-notifications@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vue-notifications/-/vue-notifications-1.0.0.tgz#7389f39aa339835d840b6feaca509fbbdb9633bb"
+  integrity sha512-UOk8xuLHP9Yz51NlwCHlMdJEOXdRiDmcc8t9ZKdvbVM22G1K0puEOro5ouIQvu8LT1luozU9pLuCzOx78CBdeQ==
 
 w3c-hr-time@^1.0.1:
   version "1.0.1"
