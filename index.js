@@ -103,9 +103,6 @@ new Vue({
         setupEvents() {
 
             this.player.on("play", () => {
-
-
-
                 this.playing = true;
                 this.playButtonText = "Pause";
 
@@ -144,22 +141,25 @@ new Vue({
             });
 
             this.player.on("playlistselect", () => {
-
-                // BUG?!!: WHILE PAUSED!, moving throught playlist from start to finish 2 times first index always returns duration of -1
+                // BUG?!!: WHILE PAUSED!, moving through playlist from start to finish 2 times first index always returns duration of -1
                 // this.player.setPreload(true) fixes it but it is still shouldn't happen!
                 // console.log(this.duration);
+
                 // workaround below prevents -1 but causes The provided double value is non-finite. error and need to press play twice to play or go to next playlist
-                if (this.player.getDuration() === -1) {
+                /*if (this.player.getDuration() === -1) {
                     this.player.load(this.playlist);   // load playlist again
                     this.duration = this.player.getDuration();
                 }
                 else {
                     this.duration = this.player.getDuration();
-                }
+                }*/
+                // below how it should just work.
+                this.duration = this.player.getDuration();
                 this.currentPlaylistIndex = this.player.getPlaylistIndex();
             });
 
             this.player.on("durationchange", () => {
+                // Event: duration change always called twice
                 console.log('duration changed');
             });
 
