@@ -26,9 +26,9 @@ new Vue({
             player: null,
             playing: false,
             playlist: [],
-            duration: '00:00:00',
+            duration: 0,
             progressBar: null,
-            position: "00:00:00",
+            position: 0,
             events: "",
             currentPlaylistIndex: 0,
             bannerImage: null, // banners[0].url
@@ -38,10 +38,14 @@ new Vue({
             description: '',
             playbackRate: 1.0,
             language: 'en',
+            // GH: Enable media preloading
             preload: true,
             textTracksEnabled: true,
             qualityLevel: 'high',
-            bufferedPercentage: 0
+            bufferedPercentage: 0,
+            captionsText: '',
+            chapterText: '',
+            chapters: []
         }
     },
 
@@ -57,23 +61,21 @@ new Vue({
 
     filters: {
         formatDuration(value) {
-            if (value === null) {
-                return "00:00:00"
+            // GH: because we're loading the player as a deferred script,
+            // the iono namespace is not available until the page is fully loaded
+            if (window.iono) {
+                return iono.Player.formatSeconds(value);
+            } else {
+                return "00:00";
             }
-
-            // from seconds to an hh:mm:ss timecode
-            return moment.duration(value, "seconds")
-                .format("hh:mm:ss", {
-                    trim: false
-                });
         }
     },
     mounted() {
         let main = () => {
-            const player = new iono.Player({
+            const player = window.player = new iono.Player({
                 'language': this.language,
                 'playbackRate': this.playbackRate,
-                'preload': this.preload, // doesn't work when initially setting it, 
+                'preload': this.preload,
                 // 'repeat': 'playlist'
                 'textTracksEnabled': this.textTracksEnabled,
                 'volume': this.volume / 100,
@@ -84,15 +86,15 @@ new Vue({
             });
             this.player = player;
             this.player.ready(() => {
-                this.setupEvents();
                 this.progressBar = document.getElementById("progress-bar");
-                // setup iono player even listeners
+
+                this.setupEvents();                      // setup iono player even listeners
+
+                // GH: Is there a reason you do this here? Does passing these as options to the player not work?
                 this.player.setVolume(this.volume / 100) // set volume to the initial on start
                 this.player.setTextTracksEnabled(true);
+
                 this.player.load(this.playlist);         // load playlist
-                //  'preload' : true in options above does NOT work!
-                //  If used then I do not get -1 issue but playlists don't switch anymore
-                //  this.player.setPreload(true); 
             });
         }
         // Wait for the DOM to load and initialise the player
@@ -141,6 +143,7 @@ new Vue({
             });
 
             this.player.on("playlistselect", () => {
+                // GH: The following bug should be fixed
                 // BUG?!!: WHILE PAUSED!, moving through playlist from start to finish 2 times first index always returns duration of -1
                 // this.player.setPreload(true) fixes it but it is still shouldn't happen!
                 // console.log(this.duration);
@@ -159,14 +162,15 @@ new Vue({
             });
 
             this.player.on("durationchange", () => {
+                this.duration = this.player.getDuration();
                 // Event: duration change always called twice
-                console.log('duration changed');
+                console.log('DEBUG: duration changed');
             });
 
             // update the position on the ui when the current playback position changes
             this.player.on("timeupdate", (event) => {
-                this.position = this.$options.filters.formatDuration(event.position);
-                this.progressBar.value = event.position / this.duration;
+                this.position = this.player.getPosition();
+                this.progressBar.value = this.position / this.duration;
             });
 
             /*** LOGS ***/
@@ -176,15 +180,11 @@ new Vue({
                 console.log(event);
                 // action tracking events
                 if (event.details.event === "action") {
-                    this.events += `TrackingEvent(action): ${
-                        event.details.action
-                        }\n`;
+                    this.events += `TrackingEvent(action): ${event.details.action} (${event.details.uid})\n`;
                 }
                 // position tracking events
                 if (event.details.event === "position") {
-                    this.events += `TrackingEvent(position): ${
-                        event.details.position
-                        }\n`;
+                    this.events += `TrackingEvent(position): ${event.details.position} (${event.details.uid})\n`;
                 }
 
             });
@@ -192,10 +192,41 @@ new Vue({
 
             this.player.on("texttrackschange", (event) => {
                 console.log(event);
+
+                // update the list of chapters
+                this.chapters = this.player.getChapters();
             });
 
             this.player.on("textcuechange", (event) => {
                 console.log(event);
+
+                const chapter = this.player.getCurrentChapter();
+                const captions = this.player.getCurrentCaptions();
+
+                // GH: build current chapter text
+                this.chapterText = (chapter && chapter.text) || '';
+
+                // GH: build current captions text - it is possible to have multiple captions at the same time
+                //  so we need to make sure we render them all. Here I just map over them to get an array
+                //  of text strings, then join them together with new lines.
+                this.captionsText = (captions || []).map(caption => {
+                    return caption.text;
+                }).join('\n');
+
+                // GH: build and show the captions text in a toast ui
+                if (this.captionsText) {
+                    iziToast.info({
+                        icon: false,
+                        id: 'captions',
+                        title: this.chapterText,
+                        message: this.captionsText,
+                        displayMode: 'replace',
+                        close: false,
+                        position: 'bottomCenter',
+                        pauseOnHover: false,
+                        image: false
+                    });
+                }
             });
 
             this.player.on("progress", (event) => {
@@ -213,6 +244,10 @@ new Vue({
         },
 
         previousPlaylistItem() {
+            // GH: Not sure the use-case for this, this would move to the previous playlist item then attempt to seek to the position
+            //  of the current playlist item: eg. click previous on playlist item 2 at position 10, moves to playlist item 1, then tries to seek to 10s
+            //  Also not that we are still in the process of deciding whether or not to allow seeking until the media element has loaded enough audio data,
+            //  which would mean you can't seek until the player reaches the 'playing' or 'paused' states.
             if (this.player.previousPlaylistItem()) {
                 this.player.setPosition(this.progressBar.offsetX / this.progressBar.offsetWidth * this.duration);
             }
@@ -226,6 +261,7 @@ new Vue({
         },
 
         nextPlaylistItem() {
+            // GH: Same question as with `previousPlaylistItem`
             if (this.player.nextPlaylistItem()) {
                 this.player.setPosition(this.progressBar.offsetX / this.progressBar.offsetWidth * this.duration);
             }

@@ -4,9 +4,8 @@
     <title>Iono Playground</title>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
-    <script defer src="https://p2.iono.qa/bundle/player.js"></script>
-    <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script defer src="https://p2.iono.fm/bundle/0.0.51/player.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://vuejs.org/js/vue.js"></script>
 </head>
 
@@ -27,7 +26,15 @@
                 <div id="audiowrap">
                     <progress @click='progressBarClicked()' id='progress-bar'
                               class="progress is-primary" value="0" max="1"></progress>
-                    <span>{{position}} / {{ duration | formatDuration }}</span>
+                    <span>{{ position | formatDuration }} / {{ duration | formatDuration }}</span>
+                    
+                    <div id="chapters">
+                        <h4>Chapters</h4>
+                        <ul id="chaptersList">
+                            <li :class="{active: chapterText === chapter.text}" v-for="chapter in chapters">{{chapter.text}}</li>
+                        </ul>
+                    </div>
+
                     <div id="tracks">
                         <a @click="previousPlaylistItem()" id="btnPrev">&larr;</a><a
                            @click="nextPlaylistItem()" id="btnNext">&rarr;</a>
