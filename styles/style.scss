@@ -39,6 +39,7 @@ p { color:#fff; display:block; font-size:.9rem; font-weight:400; margin:0 0 2px;
 a,a:visited { color:#8cc3e6; outline:0; text-decoration:underline; }
 a:hover,a:focus { color:#bbdef5; }
 p a,p a:visited { line-height:inherit; }
+h4 { font-weight: 600; }
 
 
 /* Misc.
@@ -168,6 +169,18 @@ color:#fff;
 #tracks a::-moz-focus-inner {
 border:0;
 padding:0;
+}
+
+#chapters {
+    margin: 1.5rem 0;
+}
+
+#chapters .active {
+    font-weight: 600;
+}
+#chaptersList {
+    list-style: decimal;
+    padding-left: 2em;
 }
 
 /* Media Queries
